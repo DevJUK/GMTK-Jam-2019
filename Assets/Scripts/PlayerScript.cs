@@ -11,6 +11,8 @@ public class PlayerScript : MonoBehaviour
 	private bool IsCoRunning;
 	private bool CanJump = true;
 
+	public ParticleSystem TeleportParticles;
+
 	public Animator PlayerAmin;
 	private SceneController Scenes;
 
@@ -36,6 +38,8 @@ public class PlayerScript : MonoBehaviour
 			Scenes.NextScene();
 			SwitchMat();
 			PlayerAmin.SetTrigger("Jump");
+			TeleportParticles.Play();
+
 			if (!IsCoRunning)
 			{
 				StartCoroutine(Cooldown());
@@ -54,15 +58,26 @@ public class PlayerScript : MonoBehaviour
 	}
 
 
+	private void OnTriggerEnter(Collider other)
+	{
+		// End Level
+		PlayerDead = true;
+	}
+
+
 	private void SwitchMat()
 	{
-		if (GetComponentsInChildren<SkinnedMeshRenderer>()[1].material == PlayerMats[0])
+		Debug.Log(GetComponentsInChildren<SkinnedMeshRenderer>()[1].gameObject.name);
+		Debug.Log(GetComponentsInChildren<SkinnedMeshRenderer>()[1].material.name);
+		Debug.Log(PlayerMats[0].name);
+
+		if (GetComponentsInChildren<SkinnedMeshRenderer>()[1].material.name == PlayerMats[0].name + " (Instance)")
 		{
 			GetComponentsInChildren<SkinnedMeshRenderer>()[1].material = PlayerMats[1];
 		}
-		else
+		else if (GetComponentsInChildren<SkinnedMeshRenderer>()[1].material.name == PlayerMats[1].name + " (Instance)")
 		{
-			//GetComponentsInChildren<SkinnedMeshRenderer>()[1].material = PlayerMats[0];
+			GetComponentsInChildren<SkinnedMeshRenderer>()[1].material = PlayerMats[0];
 		}
 	}
 
