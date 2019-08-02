@@ -8,13 +8,17 @@ public class PlayerScript : MonoBehaviour
 	public float MoveSpeed;
 	public bool PlayerDead;
 
-	public Animator PlayerAmin;
+	private bool IsCoRunning;
+	private bool CanJump = true;
 
-	public int CurrentScene;
+	public Animator PlayerAmin;
+	private SceneController Scenes;
+
+	public List<Material> PlayerMats;
 
     void Start()
     {
-        
+		Scenes = FindObjectOfType<SceneController>();
     }
 
 
@@ -27,18 +31,48 @@ public class PlayerScript : MonoBehaviour
 
 
 		// Jump player to next scene in sequence
-		if (Input.GetMouseButtonDown(0))
+		if ((Input.GetMouseButtonDown(0)) && (CanJump))
 		{
-			if (CurrentScene == 1)
-			{
-				CurrentScene++;
-			}
-			else if (CurrentScene == 2)
-			{
-				CurrentScene = 1;
-			}
-
+			Scenes.NextScene();
+			SwitchMat();
 			PlayerAmin.SetTrigger("Jump");
+			if (!IsCoRunning)
+			{
+				StartCoroutine(Cooldown());
+			}
 		}
     }
+
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "Death")
+		{
+			Debug.Log("Hit Wall");
+			PlayerAmin.SetBool("HitWall", true);
+		}
+	}
+
+
+	private void SwitchMat()
+	{
+		if (GetComponentsInChildren<SkinnedMeshRenderer>()[1].material == PlayerMats[0])
+		{
+			GetComponentsInChildren<SkinnedMeshRenderer>()[1].material = PlayerMats[1];
+		}
+		else
+		{
+			//GetComponentsInChildren<SkinnedMeshRenderer>()[1].material = PlayerMats[0];
+		}
+	}
+
+	private IEnumerator Cooldown()
+	{
+		IsCoRunning = true;
+		CanJump = false;
+		yield return new WaitForSeconds(1);
+		CanJump = true;
+		IsCoRunning = false;
+
+	}
 }
