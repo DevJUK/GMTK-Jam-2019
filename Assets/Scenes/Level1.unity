@@ -13981,7 +13981,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: da0dca3714ace2947a0bfccd50720747, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -14082,10 +14082,16 @@ MonoBehaviour:
   Sound_Prefab: {fileID: 7935149372376842054, guid: be27799d9cfe14445abb1c40a4c0429f,
     type: 3}
   Sound_Names:
+  - FootStep
+  - Pop
   - Purple Planet Music - Code Red 2813A2229 140bpm 28L29
+  - Teleport
   - WallHit
   Sound_Clips:
+  - {fileID: 8300000, guid: 5b98987b828961e49a274f94122797be, type: 3}
+  - {fileID: 8300000, guid: da0dca3714ace2947a0bfccd50720747, type: 3}
   - {fileID: 8300000, guid: 806559e2e438969419628052ffea0676, type: 3}
+  - {fileID: 8300000, guid: 521d08c39a4b0474dbdca5f4f3e4a279, type: 3}
   - {fileID: 8300000, guid: dc251390aef387c44beefddd7e32d903, type: 3}
 --- !u!4 &267585817
 Transform:
@@ -96134,7 +96140,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 806559e2e438969419628052ffea0676, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 0
   Mute: 0

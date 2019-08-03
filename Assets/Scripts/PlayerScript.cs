@@ -67,6 +67,7 @@ public class PlayerScript : MonoBehaviour
 			Debug.Log("Flip");
 			FlipGravity();
 			TeleportParticles.Play();
+			AM.PlayClip("Pop");
 		}
 
 		if ((CanGrav) && (!GravChanged))
