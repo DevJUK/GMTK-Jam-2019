@@ -12,17 +12,11 @@ public class Tracking : MonoBehaviour
 	public int Last;
 
 
-	private void Awake()
-	{
-		DontDestroyOnLoad(this);
-	}
-
 	private void Start()
 	{
-		GetComponent<SaveScript>().LoadData();
-
 		if (SceneManager.GetActiveScene().name == "Menu")
 		{
+			GetComponent<SaveScript>().LoadData();
 			GameObject.Find("BestDistance").GetComponent<Text>().text = "Furthest Traversed: " + PB + "%";
 			GameObject.Find("LastDistance").GetComponent<Text>().text = "Last Attempt: " + Last + "%";
 		}

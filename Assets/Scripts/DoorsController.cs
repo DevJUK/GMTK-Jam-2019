@@ -49,11 +49,25 @@ public class DoorsController : MonoBehaviour
 		StartCoroutine(WaitToUpdate(Input));
 	}
 
+	public void Menu()
+	{
+		StartCoroutine(WaitToMenu("Given Up?"));
+	}
+
 	private IEnumerator WaitToUpdate(string Input)
 	{
 		yield return new WaitForSeconds(1.25f);
 		ZeText.text = Input;
 		yield return new WaitForSeconds(1f);
 		SceneManager.LoadSceneAsync("Level1");
+	}
+
+
+	private IEnumerator WaitToMenu(string Input)
+	{
+		yield return new WaitForSeconds(1.25f);
+		ZeText.text = Input;
+		yield return new WaitForSeconds(1f);
+		SceneManager.LoadSceneAsync("Menu");
 	}
 }

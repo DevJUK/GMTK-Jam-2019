@@ -25,12 +25,14 @@ public class PlayerScript : MonoBehaviour
 
 	private Tracking GM;
 	private DoorsController DM;
+	private AudioManager AM;
 
 	void Start()
 	{
 		Scenes = FindObjectOfType<SceneController>();
 		GM = FindObjectOfType<Tracking>();
 		DM = FindObjectOfType<DoorsController>();
+		AM = FindObjectOfType<AudioManager>();
 		StartCoroutine(DelayStart());
 	}
 
@@ -53,6 +55,7 @@ public class PlayerScript : MonoBehaviour
 			SwitchMat();
 			PlayerAmin.SetTrigger("Jump");
 			TeleportParticles.Play();
+			AM.PlayClip("Teleport", Volume: 2f, Pitch: 2f);
 
 			if (!IsCoRunning)
 			{
@@ -95,6 +98,7 @@ public class PlayerScript : MonoBehaviour
 		if (collision.gameObject.tag == "Death")
 		{
 			Debug.Log("Hit Wall");
+			AM.PlayClip("WallHit");
 			PlayerAmin.SetBool("HitWall", true);
 			PlayerAmin.SetBool("Falling", false);
 			PlayerDead = true;
@@ -105,6 +109,7 @@ public class PlayerScript : MonoBehaviour
 			}
 
 			DataUpdate();
+			StartCoroutine(DelayDeath());
 
 		}
 
@@ -183,6 +188,12 @@ public class PlayerScript : MonoBehaviour
 		IsCoRunning = false;
 	}
 
+	private IEnumerator DelayDeath()
+	{
+		yield return new WaitForSeconds(1.5f);
+		DM.CloseDoors();
+		DM.SetText("Rebooting...");
+	}
 
 	private IEnumerator ReduceSpeed()
 	{
@@ -213,5 +224,23 @@ public class PlayerScript : MonoBehaviour
 		}
 
 		GM.GetComponent<SaveScript>().SaveData();
+	}
+
+
+	public void StopGame()
+	{
+		PlayerAmin.SetBool("HitWall", true);
+		PlayerAmin.SetBool("Falling", false);
+		PlayerDead = true;
+		if (GetComponent<BreakScript>().enabled)
+		{
+			GetComponent<BreakScript>().enabled = false;
+		}
+		DataUpdate();
+	}
+
+	public void PlayFootStep()
+	{
+		AM.PlayClip("FootStep", Volume: .5f);
 	}
 }

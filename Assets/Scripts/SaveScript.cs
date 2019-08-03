@@ -14,7 +14,7 @@ public class SaveScript : MonoBehaviour
 	private Tracking GM;
 
 
-	private void Start()
+	private void Awake()
 	{
 		GM = GetComponent<Tracking>();
 	}
