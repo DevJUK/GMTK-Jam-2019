@@ -11,6 +11,7 @@ TagManager:
   - Ex
   - Speed
   - Fall
+  - End
   layers:
   - Default
   - TransparentFX

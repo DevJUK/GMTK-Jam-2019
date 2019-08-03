@@ -90,6 +90,7 @@ public class PlayerScript : MonoBehaviour
 		{
 			Debug.Log("Hit Wall");
 			PlayerAmin.SetBool("HitWall", true);
+			PlayerAmin.SetBool("Falling", false);
 			PlayerDead = true;
 
 			if (GetComponent<BreakScript>().enabled)
@@ -116,6 +117,7 @@ public class PlayerScript : MonoBehaviour
 		{
 			// End Level
 			PlayerDead = true;
+			PlayerAmin.SetBool("Falling", false);
 		}
 
 
