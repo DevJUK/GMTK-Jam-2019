@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour
     {
 		if (!PlayerDead)
 		{
-			GetComponent<Rigidbody>().velocity = Vector3.forward * MoveSpeed;
+			GetComponent<Rigidbody>().velocity = new Vector3(0, 0, MoveSpeed);
 		}
 
 
