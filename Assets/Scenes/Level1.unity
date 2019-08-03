@@ -10276,7 +10276,7 @@ GameObject:
   - component: {fileID: 169000351}
   m_Layer: 0
   m_Name: Purple Floor (3)
-  m_TagString: Scene1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16882,7 +16882,7 @@ GameObject:
   - component: {fileID: 327599299}
   m_Layer: 0
   m_Name: Purple Floor (5)
-  m_TagString: Scene1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36353,7 +36353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &677622429
 Transform:
   m_ObjectHideFlags: 0
@@ -67761,6 +67761,85 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299026340}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1299116303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1299116304}
+  - component: {fileID: 1299116306}
+  - component: {fileID: 1299116305}
+  m_Layer: 5
+  m_Name: DisplayText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1299116304
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299116303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1634455288}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.000061035, y: 96.45001}
+  m_SizeDelta: {x: 685.6, y: 192.90002}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1299116305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299116303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a2f35c23534347b44b701642d75494c7, type: 3}
+    m_FontSize: 200
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 200
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'Complete: 00'
+--- !u!222 &1299116306
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299116303}
+  m_CullTransparentMesh: 0
 --- !u!1 &1302486385
 GameObject:
   m_ObjectHideFlags: 0
@@ -83617,7 +83696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1610577658
 Transform:
   m_ObjectHideFlags: 0
@@ -85127,7 +85206,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 1299116304}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -102852,12 +102932,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1958381675 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 90634115579711d43bba928a368fda1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 592883877}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1958386977
 GameObject:
   m_ObjectHideFlags: 0
@@ -108300,7 +108374,7 @@ GameObject:
   - component: {fileID: 2049703068}
   m_Layer: 0
   m_Name: Purple Floor (4)
-  m_TagString: Scene1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111732,11 +111806,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cb89cf82d6bad4bb9355ae90da152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  EndPos: {fileID: 1958381675}
+  EndPos: {fileID: 698639376}
   AmountComplete: 0
   Max: 0
-  Display: {fileID: 0}
+  Display: {fileID: 1299116305}
 --- !u!1 &2116738736
 GameObject:
   m_ObjectHideFlags: 0
@@ -112114,7 +112187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119212996}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.168072, y: 0.81706095, z: 32.49}
+  m_LocalPosition: {x: -18.168072, y: 0.81706095, z: 34.16}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1610577658}
@@ -113424,7 +113497,7 @@ PrefabInstance:
     - target: {fileID: 2521005026947741997, guid: d26cdffd14696a24bb350286d9fc88c9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 225.71
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2521005026947741997, guid: d26cdffd14696a24bb350286d9fc88c9,
         type: 3}
