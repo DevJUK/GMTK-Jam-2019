@@ -65,13 +65,14 @@ public class PlayerScript : MonoBehaviour
 	{
 		if (!GravityFlipped)
 		{
-			Physics.gravity *= -3;
-			Debug.Log(-Physics.gravity * 100);
+			Physics.gravity *= -1;
+			Debug.Log(Physics.gravity);
 			transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
 		}
 		else if (GravityFlipped)
 		{
-			Physics.gravity *= 3;
+			Physics.gravity *= 1;
+			transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 		}
 	}
 
@@ -83,6 +84,11 @@ public class PlayerScript : MonoBehaviour
 			Debug.Log("Hit Wall");
 			PlayerAmin.SetBool("HitWall", true);
 			PlayerDead = true;
+
+			if (GetComponent<BreakScript>().enabled)
+			{
+				GetComponent<BreakScript>().enabled = false;
+			}
 		}
 
 		if (collision.gameObject.tag == "Ex")
