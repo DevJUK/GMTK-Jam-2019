@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
 	public GameObject Player;
+	public bool Hit;
 
 	private void Awake()
 	{
@@ -13,14 +14,20 @@ public class BulletScript : MonoBehaviour
 
 	void Update()
     {
-		Vector3 Vec = (Player.transform.position - transform.position).normalized;
-		GetComponent<Rigidbody>().MovePosition(transform.position + Vec * 4 * Time.deltaTime);
+		if (!Hit)
+		{
+			Vector3 Vec = (Player.transform.position - transform.position).normalized;
+			GetComponent<Rigidbody>().MovePosition(transform.position + Vec * 4 * Time.deltaTime);
+		}
     }
 
 
 	private void OnCollisionEnter(Collision collision)
 	{
+		Hit = true;
+		GetComponent<MeshRenderer>().enabled = false;
+		GetComponent<Light>().enabled = false;
 		GetComponentInChildren<ParticleSystem>().Play();
-		Destroy(this, 1);
+		Destroy(gameObject, 1f);
 	}
 }

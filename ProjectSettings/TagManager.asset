@@ -8,6 +8,7 @@ TagManager:
   - Scene2
   - SceneController
   - Death
+  - Ex
   layers:
   - Default
   - TransparentFX

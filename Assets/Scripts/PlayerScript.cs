@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
 
 	public List<Material> PlayerMats;
 
-	public GameObject Body;
+	public List<GameObject> Body;
 
     void Start()
     {
@@ -60,7 +60,12 @@ public class PlayerScript : MonoBehaviour
 
 		if (collision.gameObject.tag == "Ex")
 		{
-			Body.SetActive(false);
+			for (int i = 0; i < Body.Count; i++)
+			{
+				Body[i].SetActive(false);
+			}
+
+			PlayerDead = true;
 		}
 	}
 
