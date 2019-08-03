@@ -7,9 +7,11 @@ public class PlayerScript : MonoBehaviour
 {
 	public float MoveSpeed;
 	public bool PlayerDead;
+	public bool GravityFlipped;
 
-	private bool IsCoRunning;
-	private bool CanJump = true;
+	internal bool IsCoRunning;
+	internal bool CanJump = true;
+	public bool CanGrav = false;
 
 	public ParticleSystem TeleportParticles;
 
@@ -30,7 +32,10 @@ public class PlayerScript : MonoBehaviour
     {
 		if (!PlayerDead)
 		{
-			GetComponent<Rigidbody>().velocity = new Vector3(0, 0, MoveSpeed);
+			Vector3 Dir = new Vector3(0, 0, MoveSpeed);
+			Dir.y = GetComponent<Rigidbody>().velocity.y;
+			GetComponent<Rigidbody>().velocity = Dir;
+
 		}
 
 
@@ -47,7 +52,28 @@ public class PlayerScript : MonoBehaviour
 				StartCoroutine(Cooldown());
 			}
 		}
+		else if ((Input.GetMouseButtonDown(0)) && (CanGrav))
+		{
+			Debug.Log("Flip");
+			FlipGravity();
+			TeleportParticles.Play();
+		}
     }
+
+
+	internal void FlipGravity()
+	{
+		if (!GravityFlipped)
+		{
+			Physics.gravity *= -3;
+			Debug.Log(-Physics.gravity * 100);
+			transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
+		}
+		else if (GravityFlipped)
+		{
+			Physics.gravity *= 3;
+		}
+	}
 
 
 	private void OnCollisionEnter(Collision collision)
@@ -56,6 +82,7 @@ public class PlayerScript : MonoBehaviour
 		{
 			Debug.Log("Hit Wall");
 			PlayerAmin.SetBool("HitWall", true);
+			PlayerDead = true;
 		}
 
 		if (collision.gameObject.tag == "Ex")
@@ -77,10 +104,21 @@ public class PlayerScript : MonoBehaviour
 			// End Level
 			PlayerDead = true;
 		}
+
+
+		if (other.gameObject.tag == "Speed")
+		{
+			MoveSpeed += 2;
+
+			if (!GetComponent<BreakScript>().enabled)
+			{
+				GetComponent<BreakScript>().enabled = true;
+			}
+		}
 	}
 
 
-	private void SwitchMat()
+	internal void SwitchMat()
 	{
 		Debug.Log(GetComponentsInChildren<SkinnedMeshRenderer>()[1].gameObject.name);
 		Debug.Log(GetComponentsInChildren<SkinnedMeshRenderer>()[1].material.name);
@@ -96,7 +134,7 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
-	private IEnumerator Cooldown()
+	public IEnumerator Cooldown()
 	{
 		IsCoRunning = true;
 		CanJump = false;

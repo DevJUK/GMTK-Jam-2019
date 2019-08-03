@@ -9,6 +9,7 @@ TagManager:
   - SceneController
   - Death
   - Ex
+  - Speed
   layers:
   - Default
   - TransparentFX
