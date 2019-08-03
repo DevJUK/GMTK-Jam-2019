@@ -30,4 +30,9 @@ public class DistanceTracker : MonoBehaviour
 	{
 		Display.text = "Complete: " + Mathf.FloorToInt(AmountComplete);
 	}
+
+	public int GetDistance()
+	{
+		return Mathf.FloorToInt(AmountComplete);
+	}
 }

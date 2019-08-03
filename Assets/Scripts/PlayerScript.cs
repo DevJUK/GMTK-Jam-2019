@@ -23,9 +23,15 @@ public class PlayerScript : MonoBehaviour
 
 	public List<GameObject> Body;
 
+	private Tracking GM;
+	private DoorsController DM;
+
 	void Start()
 	{
 		Scenes = FindObjectOfType<SceneController>();
+		GM = FindObjectOfType<Tracking>();
+		DM = FindObjectOfType<DoorsController>();
+		StartCoroutine(DelayStart());
 	}
 
 
@@ -83,7 +89,7 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
-
+	// Deaths
 	private void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.tag == "Death")
@@ -97,6 +103,9 @@ public class PlayerScript : MonoBehaviour
 			{
 				GetComponent<BreakScript>().enabled = false;
 			}
+
+			DataUpdate();
+
 		}
 
 		if (collision.gameObject.tag == "Ex")
@@ -107,6 +116,13 @@ public class PlayerScript : MonoBehaviour
 			}
 
 			PlayerDead = true;
+
+			if (GetComponent<BreakScript>().enabled)
+			{
+				GetComponent<BreakScript>().enabled = false;
+			}
+
+			DataUpdate();
 		}
 	}
 
@@ -172,5 +188,30 @@ public class PlayerScript : MonoBehaviour
 	{
 		MoveSpeed -= .1f;
 		yield return new WaitForSeconds(.25f);
+	}
+
+
+	private IEnumerator DelayStart()
+	{
+		float Speed = MoveSpeed;
+		MoveSpeed = 0;
+		yield return new WaitForSeconds(1.5f);
+		MoveSpeed = Speed;
+	}
+
+	private void DataUpdate()
+	{
+		// New PB
+		if (GM.PB < Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance())
+		{
+			GM.PB = Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance();
+			GM.Last = Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance();
+		}
+		else if (GM.PB > Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance())
+		{
+			GM.Last = Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance();
+		}
+
+		GM.GetComponent<SaveScript>().SaveData();
 	}
 }
