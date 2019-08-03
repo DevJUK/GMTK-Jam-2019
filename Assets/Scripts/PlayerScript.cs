@@ -23,14 +23,14 @@ public class PlayerScript : MonoBehaviour
 
 	public List<GameObject> Body;
 
-    void Start()
-    {
+	void Start()
+	{
 		Scenes = FindObjectOfType<SceneController>();
-    }
+	}
 
 
-    void Update()
-    {
+	void Update()
+	{
 		if (!PlayerDead)
 		{
 			Vector3 Dir = new Vector3(0, 0, MoveSpeed);
@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
 			Physics.gravity = Physics.gravity * 2;
 			GravChanged = true;
 		}
-    }
+	}
 
 
 	internal void FlipGravity()
@@ -128,6 +128,15 @@ public class PlayerScript : MonoBehaviour
 				GetComponent<BreakScript>().enabled = true;
 			}
 		}
+
+		if (other.gameObject.tag == "Fall")
+		{
+			MoveSpeed -= 1;
+			Physics.gravity = Physics.gravity / 4;
+			PlayerAmin.SetBool("Falling", true);
+			CanGrav = false;
+			CanJump = true;
+		}
 	}
 
 
@@ -154,6 +163,12 @@ public class PlayerScript : MonoBehaviour
 		yield return new WaitForSeconds(1);
 		CanJump = true;
 		IsCoRunning = false;
+	}
 
+
+	private IEnumerator ReduceSpeed()
+	{
+		MoveSpeed -= .1f;
+		yield return new WaitForSeconds(.25f);
 	}
 }

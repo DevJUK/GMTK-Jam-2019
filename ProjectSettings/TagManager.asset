@@ -10,6 +10,7 @@ TagManager:
   - Death
   - Ex
   - Speed
+  - Fall
   layers:
   - Default
   - TransparentFX

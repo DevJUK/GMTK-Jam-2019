@@ -31,11 +31,11 @@ public class BreakScript : MonoBehaviour
 	private IEnumerator Check()
 	{
 		IsCoRunning = true;
+		yield return new WaitForSeconds(Delay);
 		Scenes.NextScene();
 		Player.SwitchMat();
 		Player.PlayerAmin.SetTrigger("Jump");
 		Player.TeleportParticles.Play();
-		yield return new WaitForSeconds(Delay);
 		IsCoRunning = false;
 	}
 
