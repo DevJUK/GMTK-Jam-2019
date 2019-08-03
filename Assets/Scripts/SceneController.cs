@@ -34,4 +34,10 @@ public class SceneController : MonoBehaviour
 			Scene2.SetActive(false);
 		}
 	}
+
+
+	public int GetCurrentScene()
+	{
+		return CurrentScene;
+	}
 }

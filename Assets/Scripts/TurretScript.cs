@@ -5,29 +5,58 @@ using UnityEngine;
 public class TurretScript : MonoBehaviour
 {
 
-	public GameObject Barrel;
 	public GameObject Player;
 
+	public bool InRange;
+	public float Delay;
+	public bool IsCoRunning;
 
-    // Start is called before the first frame update
-    void Start()
+	public GameObject TorpPrefab;
+	private SceneController Scenes;
+
+
+	private void Start()
+	{
+		Scenes = FindObjectOfType<SceneController>();
+	}
+
+
+	void Update()
     {
-        
+		// Player In Range
+		if ((InRange) && (!IsCoRunning))
+		{
+			// Shoot Player
+			StartCoroutine(Shoot());
+		}
     }
 
 
-    void Update()
-    {
-		// Follow Player
-		Barrel.transform.LookAt(Player.transform);
-    }
+
+	private IEnumerator Shoot()
+	{
+		IsCoRunning = true;
+		GameObject Go = Instantiate(TorpPrefab, transform.position, transform.rotation);
+		Go.transform.SetParent(GameObject.FindGameObjectWithTag("Scene" + Scenes.GetCurrentScene()).transform);
+		yield return new WaitForSeconds(Delay);
+		IsCoRunning = false;
+	}
 
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.name == "Player")
 		{
+			InRange = true;
+		}
+	}
 
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (InRange)
+		{
+			InRange = false;
 		}
 	}
 }

@@ -18,6 +18,8 @@ public class PlayerScript : MonoBehaviour
 
 	public List<Material> PlayerMats;
 
+	public GameObject Body;
+
     void Start()
     {
 		Scenes = FindObjectOfType<SceneController>();
@@ -55,13 +57,21 @@ public class PlayerScript : MonoBehaviour
 			Debug.Log("Hit Wall");
 			PlayerAmin.SetBool("HitWall", true);
 		}
+
+		if (collision.gameObject.tag == "Ex")
+		{
+			Body.SetActive(false);
+		}
 	}
 
 
 	private void OnTriggerEnter(Collider other)
 	{
-		// End Level
-		PlayerDead = true;
+		if (other.gameObject.tag == "End")
+		{
+			// End Level
+			PlayerDead = true;
+		}
 	}
 
 
