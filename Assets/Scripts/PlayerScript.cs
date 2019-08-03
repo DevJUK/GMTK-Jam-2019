@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
 	public float MoveSpeed;
 	public bool PlayerDead;
 	public bool GravityFlipped;
+	public bool GravChanged;
 
 	internal bool IsCoRunning;
 	internal bool CanJump = true;
@@ -57,6 +58,12 @@ public class PlayerScript : MonoBehaviour
 			Debug.Log("Flip");
 			FlipGravity();
 			TeleportParticles.Play();
+		}
+
+		if ((CanGrav) && (!GravChanged))
+		{
+			Physics.gravity = Physics.gravity * 2;
+			GravChanged = true;
 		}
     }
 
