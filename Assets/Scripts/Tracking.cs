@@ -14,6 +14,8 @@ public class Tracking : MonoBehaviour
 
 	private void Start()
 	{
+		GetComponent<SaveScript>().LoadData();
+
 		if (SceneManager.GetActiveScene().name == "Menu")
 		{
 			GetComponent<SaveScript>().LoadData();

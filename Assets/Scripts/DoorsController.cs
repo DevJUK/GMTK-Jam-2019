@@ -9,6 +9,9 @@ public class DoorsController : MonoBehaviour
 	public Animator Anim;
 	public Text ZeText;
 
+	public List<string> MenuText;
+	public List<string> RestartText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +47,11 @@ public class DoorsController : MonoBehaviour
 		Anim.SetBool("CloseLevel", true);
 	}
 
+	public void SetText()
+	{
+		StartCoroutine(WaitToUpdate(RestartText[Random.Range(0, MenuText.Count)]));
+	}
+
 	public void SetText(string Input)
 	{
 		StartCoroutine(WaitToUpdate(Input));
@@ -51,7 +59,12 @@ public class DoorsController : MonoBehaviour
 
 	public void Menu()
 	{
-		StartCoroutine(WaitToMenu("Given Up?"));
+		StartCoroutine(WaitToMenu(MenuText[Random.Range(0, RestartText.Count)]));
+	}
+
+	public void Win()
+	{
+		StartCoroutine(WaitToMenu("Congrats!"));
 	}
 
 	private IEnumerator WaitToUpdate(string Input)

@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
 	public float MoveSpeed;
 	public bool PlayerDead;
-	public bool GravityFlipped;
+	public bool GravityFlipped = true;
 	public bool GravChanged;
 	public bool GameStarted = false;
 
@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
 	public bool CanGrav = false;
 
 	public ParticleSystem TeleportParticles;
+	public ParticleSystem GravityParticles;
 
 	public Animator PlayerAmin;
 	private SceneController Scenes;
@@ -35,6 +36,8 @@ public class PlayerScript : MonoBehaviour
 		GM = FindObjectOfType<Tracking>();
 		DM = FindObjectOfType<DoorsController>();
 		AM = FindObjectOfType<AudioManager>();
+		Physics.gravity = new Vector3(0, -9.8f, 0);
+		transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 		StartCoroutine(DelayStart());
 	}
 
@@ -70,7 +73,7 @@ public class PlayerScript : MonoBehaviour
 			{
 				Debug.Log("Flip");
 				FlipGravity();
-				TeleportParticles.Play();
+				GravityParticles.Play();
 				AM.PlayClip("Pop");
 				AM.PlayClip("Teleport", Volume: 2f, Pitch: 2f);
 			}
@@ -91,6 +94,12 @@ public class PlayerScript : MonoBehaviour
 			}
 
 			PlayerAmin.SetBool("GameStarted", true);
+			DataUpdate();
+		}
+		else
+		{
+			Debug.Log("else");
+
 		}
 	}
 
@@ -123,6 +132,7 @@ public class PlayerScript : MonoBehaviour
 
 			if (GetComponent<BreakScript>().enabled)
 			{
+				GetComponent<BreakScript>().StopAllCoroutines();
 				GetComponent<BreakScript>().enabled = false;
 			}
 
@@ -149,6 +159,7 @@ public class PlayerScript : MonoBehaviour
 
 			if (GetComponent<BreakScript>().enabled)
 			{
+				GetComponent<BreakScript>().StopAllCoroutines();
 				GetComponent<BreakScript>().enabled = false;
 			}
 
@@ -165,6 +176,10 @@ public class PlayerScript : MonoBehaviour
 			// End Level
 			PlayerDead = true;
 			PlayerAmin.SetBool("Falling", false);
+			CanGrav = false;
+			CanJump = false;
+			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().text = "Drive: Destroyed";
+			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().color = Color.red;
 		}
 
 
@@ -174,6 +189,7 @@ public class PlayerScript : MonoBehaviour
 
 			if (!GetComponent<BreakScript>().enabled)
 			{
+				GetComponent<BreakScript>().StopAllCoroutines();
 				GetComponent<BreakScript>().enabled = true;
 			}
 
@@ -184,6 +200,11 @@ public class PlayerScript : MonoBehaviour
 		if (other.gameObject.tag == "Fall")
 		{
 			MoveSpeed -= 1;
+			if (!GetComponent<BreakScript>().enabled)
+			{
+				GetComponent<BreakScript>().StopAllCoroutines();
+				GetComponent<BreakScript>().enabled = true;
+			}
 			Physics.gravity = Physics.gravity / 4;
 			PlayerAmin.SetBool("Falling", true);
 			CanGrav = false;
@@ -223,7 +244,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1.5f);
 		DM.CloseDoors();
-		DM.SetText("Rebooting...");
+		DM.SetText();
 	}
 
 	private IEnumerator ReduceSpeed()
@@ -246,8 +267,13 @@ public class PlayerScript : MonoBehaviour
 
 	private IEnumerator End()
 	{
+		// Sound
+		AM.PlayClip("Yay");
+
 		yield return new WaitForSeconds(2);
 		// Particles
+
+
 	}
 
 	private void DataUpdate()
@@ -257,10 +283,12 @@ public class PlayerScript : MonoBehaviour
 		{
 			GM.PB = Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance();
 			GM.Last = Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance();
+			Debug.Log("NEW PB & LAST");
 		}
 		else if (GM.PB > Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance())
 		{
 			GM.Last = Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance();
+			Debug.Log("NEW LAST ONLY");
 		}
 
 		GM.GetComponent<SaveScript>().SaveData();
@@ -276,7 +304,6 @@ public class PlayerScript : MonoBehaviour
 		{
 			GetComponent<BreakScript>().enabled = false;
 		}
-		DataUpdate();
 	}
 
 	public void PlayFootStep()
