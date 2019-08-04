@@ -1,0 +1,17 @@
+{
+"companyName": "CarterGames",
+"productName": "JumpDrive",
+"productVersion": "0.1",
+"dataUrl": "FB2.data.unityweb",
+"wasmCodeUrl": "FB2.wasm.code.unityweb",
+"wasmFrameworkUrl": "FB2.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "FB2.jpg",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.1.0f2"
+}
