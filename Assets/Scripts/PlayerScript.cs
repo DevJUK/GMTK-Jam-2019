@@ -39,6 +39,10 @@ public class PlayerScript : MonoBehaviour
 		Physics.gravity = new Vector3(0, -9.8f, 0);
 		transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 		StartCoroutine(DelayStart());
+		if (!GameObject.Find("MenuButton").activeInHierarchy)
+		{
+			GameObject.Find("MenuButton").SetActive(true);
+		}
 	}
 
 
@@ -149,11 +153,12 @@ public class PlayerScript : MonoBehaviour
 		if (collision.gameObject.tag == "Ex")
 		{
 			PlayerAmin.SetBool("HitWall", true);
-	
-			for (int i = 0; i < Body.Count; i++)
-			{
-				Body[i].SetActive(false);
-			}
+			AM.PlayClip("Torp");
+
+			//for (int i = 0; i < Body.Count; i++)
+			//{
+			//	Body[i].SetActive(false);
+			//}
 
 			PlayerDead = true;
 
@@ -261,7 +266,7 @@ public class PlayerScript : MonoBehaviour
 		IsCoRunning = true;
 		float Speed = MoveSpeed;
 		MoveSpeed = 0;
-		yield return new WaitForSeconds(.75f);
+		yield return new WaitForSeconds(.15f);
 		MoveSpeed = Speed;
 		IsCoRunning = false;
 	}
@@ -273,6 +278,7 @@ public class PlayerScript : MonoBehaviour
 		AM.PlayClip("Yay");
 		yield return new WaitForSeconds(.5f);
 		AM.PlayClip("Land");
+		GameObject.Find("MenuButton").SetActive(false);
 		yield return new WaitForSeconds(2);
 		// Particles
 
