@@ -47,6 +47,8 @@ public class SaveScript : MonoBehaviour
 		// Converts to binrary, using the data from the data thingy in a data file
 		BinFormat.Serialize(DataFile, Data);
 
+		Application.ExternalCall("SyncFiles");
+
 		// Closes the data file
 		DataFile.Close();
 	}
@@ -64,6 +66,8 @@ public class SaveScript : MonoBehaviour
 
 			// converts the file to readable thingys :) ( "unbinraryfys" the file )
 			GameData Data = (GameData)BinFormat.Deserialize(DataFile);
+
+			Application.ExternalCall("SyncFiles");
 
 			// Closes the file
 			DataFile.Close();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class PlayerScript : MonoBehaviour
@@ -9,6 +10,7 @@ public class PlayerScript : MonoBehaviour
 	public bool PlayerDead;
 	public bool GravityFlipped;
 	public bool GravChanged;
+	public bool GameStarted = false;
 
 	internal bool IsCoRunning;
 	internal bool CanJump = true;
@@ -39,41 +41,56 @@ public class PlayerScript : MonoBehaviour
 
 	void Update()
 	{
-		if (!PlayerDead)
+		if (GameStarted)
 		{
-			Vector3 Dir = new Vector3(0, 0, MoveSpeed);
-			Dir.y = GetComponent<Rigidbody>().velocity.y;
-			GetComponent<Rigidbody>().velocity = Dir;
+			if (!PlayerDead)
+			{
+				Vector3 Dir = new Vector3(0, 0, MoveSpeed);
+				Dir.y = GetComponent<Rigidbody>().velocity.y;
+				GetComponent<Rigidbody>().velocity = Dir;
+			}
 
+
+			// Jump player to next scene in sequence
+			if ((Input.GetMouseButtonDown(0)) && (CanJump))
+			{
+				Scenes.NextScene();
+				SwitchMat();
+				PlayerAmin.SetTrigger("Jump");
+				TeleportParticles.Play();
+				AM.PlayClip("Jump");
+				AM.PlayClip("Teleport", Volume: 2f, Pitch: 2f);
+
+				if (!IsCoRunning)
+				{
+					StartCoroutine(Cooldown());
+				}
+			}
+			else if ((Input.GetMouseButtonDown(0)) && (CanGrav))
+			{
+				Debug.Log("Flip");
+				FlipGravity();
+				TeleportParticles.Play();
+				AM.PlayClip("Pop");
+				AM.PlayClip("Teleport", Volume: 2f, Pitch: 2f);
+			}
+
+			if ((CanGrav) && (!GravChanged))
+			{
+				Physics.gravity = Physics.gravity * 2;
+				GravChanged = true;
+			}
 		}
-
-
-		// Jump player to next scene in sequence
-		if ((Input.GetMouseButtonDown(0)) && (CanJump))
+		else if (Input.GetButtonDown("Space"))
 		{
-			Scenes.NextScene();
-			SwitchMat();
-			PlayerAmin.SetTrigger("Jump");
-			TeleportParticles.Play();
-			AM.PlayClip("Teleport", Volume: 2f, Pitch: 2f);
+			GameStarted = true;
 
 			if (!IsCoRunning)
 			{
-				StartCoroutine(Cooldown());
+				StartCoroutine(DelayStart());
 			}
-		}
-		else if ((Input.GetMouseButtonDown(0)) && (CanGrav))
-		{
-			Debug.Log("Flip");
-			FlipGravity();
-			TeleportParticles.Play();
-			AM.PlayClip("Pop");
-		}
 
-		if ((CanGrav) && (!GravChanged))
-		{
-			Physics.gravity = Physics.gravity * 2;
-			GravChanged = true;
+			PlayerAmin.SetBool("GameStarted", true);
 		}
 	}
 
@@ -109,6 +126,11 @@ public class PlayerScript : MonoBehaviour
 				GetComponent<BreakScript>().enabled = false;
 			}
 
+			for (int i = 0; i < GameObject.FindGameObjectsWithTag("Ex").Length; i++)
+			{
+				GameObject.FindGameObjectsWithTag("Ex")[i].SetActive(false);
+			}
+
 			DataUpdate();
 			StartCoroutine(DelayDeath());
 
@@ -116,6 +138,8 @@ public class PlayerScript : MonoBehaviour
 
 		if (collision.gameObject.tag == "Ex")
 		{
+			PlayerAmin.SetBool("HitWall", true);
+	
 			for (int i = 0; i < Body.Count; i++)
 			{
 				Body[i].SetActive(false);
@@ -129,6 +153,7 @@ public class PlayerScript : MonoBehaviour
 			}
 
 			DataUpdate();
+			StartCoroutine(DelayDeath());
 		}
 	}
 
@@ -151,6 +176,9 @@ public class PlayerScript : MonoBehaviour
 			{
 				GetComponent<BreakScript>().enabled = true;
 			}
+
+			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().text = "Drive: Gravity";
+			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().color = Color.cyan;
 		}
 
 		if (other.gameObject.tag == "Fall")
@@ -160,6 +188,8 @@ public class PlayerScript : MonoBehaviour
 			PlayerAmin.SetBool("Falling", true);
 			CanGrav = false;
 			CanJump = true;
+			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().text = "Drive: Jump";
+			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().color = Color.green;
 		}
 	}
 
@@ -205,10 +235,19 @@ public class PlayerScript : MonoBehaviour
 
 	private IEnumerator DelayStart()
 	{
+		IsCoRunning = true;
 		float Speed = MoveSpeed;
 		MoveSpeed = 0;
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(.75f);
 		MoveSpeed = Speed;
+		IsCoRunning = false;
+	}
+
+
+	private IEnumerator End()
+	{
+		yield return new WaitForSeconds(2);
+		// Particles
 	}
 
 	private void DataUpdate()

@@ -22,6 +22,10 @@ public class DistanceTracker : MonoBehaviour
 		AmountComplete = (EndPos.position.z - Camera.main.transform.position.z) / (Max / 100);
 		//AmountComplete = AmountComplete + (EndPos.position.y - Camera.main.transform.position.y) / (Max / 100);
 		AmountComplete = 100 - AmountComplete;
+		if (AmountComplete < 0)
+		{
+			AmountComplete = 0;
+		}
 		SetAmount();
     }
 

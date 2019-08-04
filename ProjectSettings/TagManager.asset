@@ -12,6 +12,7 @@ TagManager:
   - Speed
   - Fall
   - End
+  - DriveText
   layers:
   - Default
   - TransparentFX
