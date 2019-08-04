@@ -14358,26 +14358,32 @@ MonoBehaviour:
   Sound_Prefab: {fileID: 7935149372376842054, guid: be27799d9cfe14445abb1c40a4c0429f,
     type: 3}
   Sound_Names:
+  - Click
   - Doors
   - FootStep
   - Jump
   - Land
   - Pop
   - Purple Planet Music - Code Red 2813A2229 140bpm 28L29
+  - Purple Planet Music - Hi-Tech Evolution 2813A2429 52bpm 28L29
   - Teleport
   - Torp
   - WallHit
+  - Woosh
   - Yay
   Sound_Clips:
+  - {fileID: 8300000, guid: d7165f62c40458645aaeb1c61fc80f8f, type: 3}
   - {fileID: 8300000, guid: 6d87bdc0bb722814593e0802c2269e44, type: 3}
   - {fileID: 8300000, guid: 5b98987b828961e49a274f94122797be, type: 3}
   - {fileID: 8300000, guid: 4a4dbacc9fe8882478bd28f169b1e3d1, type: 3}
   - {fileID: 8300000, guid: 496142fb6ab3ebc4eaf9fc11e1b7cb90, type: 3}
   - {fileID: 8300000, guid: da0dca3714ace2947a0bfccd50720747, type: 3}
   - {fileID: 8300000, guid: 806559e2e438969419628052ffea0676, type: 3}
+  - {fileID: 8300000, guid: a3e1b029e3c7a2146b105704a05ca0a2, type: 3}
   - {fileID: 8300000, guid: 521d08c39a4b0474dbdca5f4f3e4a279, type: 3}
   - {fileID: 8300000, guid: 895014a111f2c6e43be287202f235909, type: 3}
   - {fileID: 8300000, guid: dc251390aef387c44beefddd7e32d903, type: 3}
+  - {fileID: 8300000, guid: 55a23755a9996e84fa258fb18993ce33, type: 3}
   - {fileID: 8300000, guid: 7566898b8f8c39247b3338fe8f3771ee, type: 3}
 --- !u!4 &267585817
 Transform:
@@ -109930,7 +109936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1960841188
 MonoBehaviour:
   m_ObjectHideFlags: 0
