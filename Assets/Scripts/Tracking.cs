@@ -19,6 +19,16 @@ public class Tracking : MonoBehaviour
 		if (SceneManager.GetActiveScene().name == "Menu")
 		{
 			GetComponent<SaveScript>().LoadData();
+
+			if (PB == 100)
+			{
+				GameObject.Find("BestDistance").GetComponent<Text>().color = Color.green;
+			}
+			else
+			{
+				GameObject.Find("BestDistance").GetComponent<Text>().color = Color.white;
+			}
+
 			GameObject.Find("BestDistance").GetComponent<Text>().text = "Furthest Traversed: " + PB + "%";
 			GameObject.Find("LastDistance").GetComponent<Text>().text = "Last Attempt: " + Last + "%";
 		}

@@ -180,6 +180,8 @@ public class PlayerScript : MonoBehaviour
 			CanJump = false;
 			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().text = "Drive: Destroyed";
 			GameObject.FindGameObjectWithTag("DriveText").GetComponent<Text>().color = Color.red;
+			GameObject.Find("MusicPlayer").GetComponent<AudioSource>().Stop();
+			StartCoroutine(End());
 		}
 
 
@@ -203,7 +205,7 @@ public class PlayerScript : MonoBehaviour
 			if (!GetComponent<BreakScript>().enabled)
 			{
 				GetComponent<BreakScript>().StopAllCoroutines();
-				GetComponent<BreakScript>().enabled = true;
+				GetComponent<BreakScript>().enabled = false;
 			}
 			Physics.gravity = Physics.gravity / 4;
 			PlayerAmin.SetBool("Falling", true);
@@ -269,14 +271,15 @@ public class PlayerScript : MonoBehaviour
 	{
 		// Sound
 		AM.PlayClip("Yay");
-
+		yield return new WaitForSeconds(.5f);
+		AM.PlayClip("Land");
 		yield return new WaitForSeconds(2);
 		// Particles
 
 
 	}
 
-	private void DataUpdate()
+	internal void DataUpdate()
 	{
 		// New PB
 		if (GM.PB < Scenes.gameObject.GetComponent<DistanceTracker>().GetDistance())

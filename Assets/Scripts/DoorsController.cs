@@ -12,11 +12,17 @@ public class DoorsController : MonoBehaviour
 	public List<string> MenuText;
 	public List<string> RestartText;
 
+	private PlayerScript Player;
+
     // Start is called before the first frame update
     void Start()
     {
 		Anim = GetComponent<Animator>();
 		ZeText = GetComponentInChildren<Text>();
+		if (FindObjectOfType<PlayerScript>())
+		{
+			Player = FindObjectOfType<PlayerScript>();
+		}
 		OpenDoors();
     }
 
@@ -64,6 +70,7 @@ public class DoorsController : MonoBehaviour
 
 	public void Win()
 	{
+		Player.DataUpdate();
 		StartCoroutine(WaitToMenu("Congrats!"));
 	}
 

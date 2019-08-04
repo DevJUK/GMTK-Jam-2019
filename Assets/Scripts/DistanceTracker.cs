@@ -26,13 +26,17 @@ public class DistanceTracker : MonoBehaviour
 		{
 			AmountComplete = 0;
 		}
+		if (AmountComplete > 100)
+		{
+			AmountComplete = 100;
+		}
 		SetAmount();
     }
 
 
 	public void SetAmount()
 	{
-		Display.text = "Complete: " + Mathf.FloorToInt(AmountComplete);
+		Display.text = "Complete: " + Mathf.FloorToInt(AmountComplete) + "%";
 	}
 
 	public int GetDistance()

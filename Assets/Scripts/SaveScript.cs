@@ -81,7 +81,6 @@ public class SaveScript : MonoBehaviour
 
 		//}
 
-
 		GM.PB = PlayerPrefs.GetInt("PB");
 		GM.Last = PlayerPrefs.GetInt("Last");
 	}

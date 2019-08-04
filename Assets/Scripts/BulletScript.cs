@@ -14,10 +14,13 @@ public class BulletScript : MonoBehaviour
 
 	void Update()
     {
-		if (!Hit)
+		if (!Player.GetComponent<PlayerScript>().PlayerDead)
 		{
-			Vector3 Vec = (Player.transform.position - transform.position).normalized;
-			GetComponent<Rigidbody>().MovePosition(transform.position + Vec * 4 * Time.deltaTime);
+			if (!Hit)
+			{
+				Vector3 Vec = (Player.transform.position - transform.position).normalized;
+				GetComponent<Rigidbody>().MovePosition(transform.position + Vec * 4 * Time.deltaTime);
+			}
 		}
     }
 
